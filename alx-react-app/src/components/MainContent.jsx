@@ -1,12 +1,9 @@
 function MainContent() {
   return (
     <main>
-      <ul>
-        <li>Lagos</li>
-        <li>Abuja</li>
-        <li>Port Harcourt</li>
-      </ul>
+      <p>I love to visit New York, Paris, and Tokyo.</p>
     </main>
   );
 }
+
 export default MainContent;
