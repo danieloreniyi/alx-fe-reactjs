@@ -1,12 +1,14 @@
-import Counter from "./components/Counter";
+import AddRecipeForm from './components/AddRecipeForm';
+import RecipeList from './components/RecipeList';
 
-function App() {
+const App = () => {
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>React Counter App</h1>
-      <Counter />
+      <h1>Recipe Sharing App</h1>
+      <AddRecipeForm />
+      <RecipeList />
     </div>
   );
-}
+};
 
 export default App;
