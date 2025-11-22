@@ -1,28 +1,42 @@
-// src/components/recipeStore.js
-import { create } from 'zustand';
-import { nanoid } from 'nanoid';
+import { create } from "zustand";
 
-const useRecipeStore = create((set) => ({
+export const useRecipeStore = create((set) => ({
   recipes: [],
+  searchTerm: "",
+  filteredRecipes: [],
 
-  addRecipe: ({ title, description }) =>
-    set((state) => ({
-      recipes: [...state.recipes, { id: nanoid(), title, description }],
+  // Set search keyword
+  setSearchTerm: (term) =>
+    set(() => ({
+      searchTerm: term,
     })),
 
-  updateRecipe: (id, updatedRecipe) =>
+  // Filter recipes based on search term
+  filterRecipes: () =>
     set((state) => ({
-      recipes: state.recipes.map((r) =>
-        r.id === id ? { ...r, ...updatedRecipe } : r
+      filteredRecipes: state.recipes.filter((recipe) =>
+        recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
       ),
     })),
 
+  // Existing recipe actions (keep yours)
+  addRecipe: (recipe) =>
+    set((state) => {
+      const updated = [...state.recipes, recipe];
+      return { recipes: updated, filteredRecipes: updated };
+    }),
+
+  updateRecipe: (id, updatedRecipe) =>
+    set((state) => {
+      const updated = state.recipes.map((r) =>
+        r.id === id ? updatedRecipe : r
+      );
+      return { recipes: updated, filteredRecipes: updated };
+    }),
+
   deleteRecipe: (id) =>
-    set((state) => ({
-      recipes: state.recipes.filter((r) => r.id !== id),
-    })),
-
-  setRecipes: (recipes) => set({ recipes }),
+    set((state) => {
+      const updated = state.recipes.filter((r) => r.id !== id);
+      return { recipes: updated, filteredRecipes: updated };
+    }),
 }));
-
-export default useRecipeStore;
