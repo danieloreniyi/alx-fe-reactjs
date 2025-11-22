@@ -4,6 +4,8 @@ import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
 import SearchBar from './components/SearchBar';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
 import useRecipeStore from './components/recipeStore';
 
 function App() {
@@ -23,7 +25,17 @@ function App() {
         <h1>Recipe App</h1>
         <SearchBar />
         <Routes>
-          <Route path="/" element={<><AddRecipeForm /><RecipeList /></>} />
+          <Route
+            path="/"
+            element={
+              <>
+                <AddRecipeForm />
+                <RecipeList />
+                <FavoritesList />
+                <RecommendationsList />
+              </>
+            }
+          />
           <Route path="/recipe/:id" element={<RecipeDetailsWrapper />} />
         </Routes>
       </div>
