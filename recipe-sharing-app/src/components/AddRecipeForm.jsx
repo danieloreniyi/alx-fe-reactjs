@@ -14,8 +14,7 @@ export default function AddRecipeForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
+      <textarea
         placeholder="Recipe title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
