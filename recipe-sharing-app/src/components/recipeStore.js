@@ -1,52 +1,30 @@
-import React, { useState } from 'react';
-import useRecipeStore from './recipeStore';
+import { create } from 'zustand';
+import { nanoid } from 'nanoid'; // for unique IDs
 
-const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
-  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
-  const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
+const useRecipeStore = create((set) => ({
+  recipes: [],
 
-  // Track which recipe is being edited
-  const [editingId, setEditingId] = useState(null);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  // Original ALX-required function
+  addRecipe: ({ title, description }) =>
+    set((state) => ({
+      recipes: [...state.recipes, { id: nanoid(), title, description }],
+    })),
 
-  const startEditing = (recipe) => {
-    setEditingId(recipe.id);
-    setTitle(recipe.title);
-    setDescription(recipe.description);
-  };
+  // New functions for detailed management
+  updateRecipe: (id, updatedRecipe) =>
+    set((state) => ({
+      recipes: state.recipes.map((recipe) =>
+        recipe.id === id ? { ...recipe, ...updatedRecipe } : recipe
+      ),
+    })),
 
-  const saveEdit = () => {
-    updateRecipe(editingId, { title, description });
-    setEditingId(null);
-    setTitle('');
-    setDescription('');
-  };
+  deleteRecipe: (id) =>
+    set((state) => ({
+      recipes: state.recipes.filter((recipe) => recipe.id !== id),
+    })),
 
-  return (
-    <ul>
-      {recipes.map((recipe) => (
-        <li key={recipe.id}>
-          {editingId === recipe.id ? (
-            <div>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} />
-              <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-              <button onClick={saveEdit}>Save</button>
-              <button onClick={() => setEditingId(null)}>Cancel</button>
-            </div>
-          ) : (
-            <div>
-              <h3>{recipe.title}</h3>
-              <p>{recipe.description}</p>
-              <button onClick={() => startEditing(recipe)}>Edit</button>
-              <button onClick={() => deleteRecipe(recipe.id)}>Delete</button>
-            </div>
-          )}
-        </li>
-      ))}
-    </ul>
-  );
-};
+  // Required by ALX
+  setRecipes: (recipes) => set({ recipes }),
+}));
 
-export default RecipeList;
+export default useRecipeStore;
