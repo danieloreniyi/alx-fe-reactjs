@@ -1,29 +1,27 @@
+// src/components/recipeStore.js
 import { create } from 'zustand';
-import { nanoid } from 'nanoid'; // for unique IDs
+import { nanoid } from 'nanoid';
 
 const useRecipeStore = create((set) => ({
   recipes: [],
 
-  // Original ALX-required function
   addRecipe: ({ title, description }) =>
     set((state) => ({
       recipes: [...state.recipes, { id: nanoid(), title, description }],
     })),
 
-  // New functions for detailed management
   updateRecipe: (id, updatedRecipe) =>
     set((state) => ({
-      recipes: state.recipes.map((recipe) =>
-        recipe.id === id ? { ...recipe, ...updatedRecipe } : recipe
+      recipes: state.recipes.map((r) =>
+        r.id === id ? { ...r, ...updatedRecipe } : r
       ),
     })),
 
   deleteRecipe: (id) =>
     set((state) => ({
-      recipes: state.recipes.filter((recipe) => recipe.id !== id),
+      recipes: state.recipes.filter((r) => r.id !== id),
     })),
 
-  // Required by ALX
   setRecipes: (recipes) => set({ recipes }),
 }));
 

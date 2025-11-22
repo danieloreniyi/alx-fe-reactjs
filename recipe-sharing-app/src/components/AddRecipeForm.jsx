@@ -8,7 +8,7 @@ export default function AddRecipeForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title.trim() || !description.trim()) return;
+    if (!title.trim()) return;
     addRecipe({ title, description });
     setTitle('');
     setDescription('');
