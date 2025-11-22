@@ -1,15 +1,16 @@
 import useRecipeStore from '../store/recipeStore';
 
-const RecipeList = () => {
+export default function RecipeList() {
   const recipes = useRecipeStore((state) => state.recipes);
 
   return (
-    <ul>
-      {recipes.map((recipe, index) => (
-        <li key={index}>{recipe.title}</li>
-      ))}
-    </ul>
+    <div>
+      <h2>Recipes</h2>
+      <ul>
+        {recipes.map((r, index) => (
+          <li key={index}>{r.title}</li>
+        ))}
+      </ul>
+    </div>
   );
-};
-
-export default RecipeList;
+}

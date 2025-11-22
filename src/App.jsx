@@ -1,7 +1,7 @@
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 
-const App = () => {
+export default function App() {
   return (
     <div>
       <h1>Recipe Sharing App</h1>
@@ -9,6 +9,4 @@ const App = () => {
       <RecipeList />
     </div>
   );
-};
-
-export default App;
+}
