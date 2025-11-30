@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [query, setQuery] = useState('');
+  const [users, setUsers] = useState([]);
+
+  const handleSearch = async () => {
+    if (!query) return;
+    try {
+      const res = await axios.get(`https://api.github.com/search/users?q=${query}`);
+      setUsers(res.data.items);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <>
+    <div style={{ padding: '20px' }}>
+      <h1>GitHub User Search</h1>
+      <input 
+        type="text" 
+        placeholder="Search GitHub users..." 
+        value={query} 
+        onChange={(e) => setQuery(e.target.value)} 
+      />
+      <button onClick={handleSearch}>Search</button>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {users.map(user => (
+          <div key={user.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
+            <img src={user.avatar_url} alt={user.login} width="50" />
+            <h3>{user.login}</h3>
+            <a href={user.html_url} target="_blank" rel="noreferrer">Profile</a>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
