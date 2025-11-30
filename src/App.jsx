@@ -26,13 +26,11 @@ function App() {
       />
       <button onClick={handleSearch}>Search</button>
       <div>
-        {users?.map((user) => (
+        {users?.map(user => (
           <div key={user.id}>
             <img src={user.avatar_url} alt={user.login} width="50" />
             <p>{user.login}</p>
-            <a href={user.html_url} target="_blank" rel="noreferrer">
-              Profile
-            </a>
+            <a href={user.html_url} target="_blank" rel="noreferrer">Profile</a>
           </div>
         ))}
       </div>
