@@ -25,24 +25,27 @@ export default function Search() {
 
   return (
     <div>
+      <h1>GitHub User Search</h1>
       <form onSubmit={handleSearch}>
         <input
           type="text"
+          placeholder="Search GitHub users..."
           value={username}
-          placeholder="Enter GitHub username"
           onChange={(e) => setUsername(e.target.value)}
         />
         <button type="submit">Search</button>
       </form>
 
       {loading && <p>Loading...</p>}
-      {error && <p>Looks like we can't find the user</p>}
+      {error && <p>Looks like we cant find the user</p>}
 
       {user && (
         <div>
-          <img src={user.avatar_url} alt={user.login} width="100" />
-          <h3>{user.name || user.login}</h3>
-          <a href={user.html_url} target="_blank" rel="noreferrer">Profile</a>
+          <img src={user.avatar_url} alt={user.login} width="50" />
+          <p>{user.login}</p>
+          <a href={user.html_url} target="_blank" rel="noreferrer">
+            Profile
+          </a>
         </div>
       )}
     </div>
