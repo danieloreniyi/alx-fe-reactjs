@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 
-function App() {
+export default function App() {
   const [query, setQuery] = useState('');
   const [users, setUsers] = useState([]);
 
   const handleSearch = async () => {
     if (!query) return;
-    try {
-      const res = await fetch(`https://api.github.com/search/users?q=${query}`);
-      const data = await res.json();
-      setUsers(data.items);
-    } catch (error) {
-      console.error(error);
-    }
+    const res = await fetch(`https://api.github.com/search/users?q=${query}`);
+    const data = await res.json();
+    setUsers(data.items);
   };
 
   return (
@@ -20,13 +16,13 @@ function App() {
       <h1>GitHub User Search</h1>
       <input
         type="text"
-        placeholder="Search GitHub users..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        placeholder="Enter GitHub username"
       />
       <button onClick={handleSearch}>Search</button>
       <div>
-        {users?.map(user => (
+        {users.length > 0 && users.map((user) => (
           <div key={user.id}>
             <img src={user.avatar_url} alt={user.login} width="50" />
             <p>{user.login}</p>
@@ -37,5 +33,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
