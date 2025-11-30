@@ -16,7 +16,7 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <h1>GitHub User Search</h1>
       <input
         type="text"
@@ -26,13 +26,10 @@ function App() {
       />
       <button onClick={handleSearch}>Search</button>
       <div>
-        {users.map(user => (
-          <div
-            key={user.id}
-            style={{ border: '1px solid #ccc', padding: '10px', margin: '10px' }}
-          >
+        {users?.map((user) => (
+          <div key={user.id}>
             <img src={user.avatar_url} alt={user.login} width="50" />
-            <h3>{user.login}</h3>
+            <p>{user.login}</p>
             <a href={user.html_url} target="_blank" rel="noreferrer">
               Profile
             </a>
