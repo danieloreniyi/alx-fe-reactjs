@@ -12,7 +12,18 @@ export default function HomePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Recipe Sharing Platform</h1>
+      {/* Header with link */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Recipe Sharing Platform</h1>
+        <Link
+          to="/add-recipe"
+          className="text-blue-500 font-semibold hover:underline"
+        >
+          Add New Recipe
+        </Link>
+      </div>
+
+      {/* Recipe grid */}
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {recipes.map((recipe) => (
           <Link key={recipe.id} to={`/recipe/${recipe.id}`} className="block">
